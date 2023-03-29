@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\IIT\2nd yr\2nd sem\beam_load_analyzer\build\windows\CMakeFiles\9b070c910f280fdcbbc82aaa49d7f23a\flutter_windows.dll.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\IIT\2nd yr\2nd sem\beam_load_analyzer\build\windows\CMakeFiles\e8fe22a98edcb6e4f4893af0cb438be7\flutter_assemble.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\IIT\2nd yr\2nd sem\beam_load_analyzer\windows\flutter\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\IIT\2nd yr\2nd sem\beam_load_analyzer\build\windows\flutter\CMakeFiles\flutter_assemble" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{95C8E4E8-B5D7-3C2D-9AC1-2BCDC5F2B606}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
