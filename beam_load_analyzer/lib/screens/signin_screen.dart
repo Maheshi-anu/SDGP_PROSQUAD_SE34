@@ -1,6 +1,8 @@
 import 'package:beam_load_analyzer/screens/home_screen.dart';
+import 'package:beam_load_analyzer/screens/reset_password.dart';
 import 'package:beam_load_analyzer/screens/signup_screen.dart';
 import 'package:beam_load_analyzer/utils/color_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,8 +16,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).size.height * 0.2, 20, 0),
+                20, MediaQuery.of(context).size.height * 0.1, 20, 0),
             child: Column(
               children: <Widget>[
                 logoWidget("assets/images/logo.jpg"),
@@ -41,23 +43,37 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField("Enter UserName", Icons.person, false,
+                reusableTextField("Enter UserName", Icons.person_outline, false,
                     _emailTextController),
 
                 //password
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Password", Icons.lock, true,
+                reusableTextField("Enter Password", Icons.lock_outline, true,
                     _passwordTextController),
 
-                //Login Button
+                //forget password
                 const SizedBox(
-                  height: 20,
+                  height: 2,
                 ),
-                signInSignUpButton(context, true, () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                forgetPassword(context),
+
+                //Login Button
+
+                firebaseButton(context, "Sign In", () {
+                  FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: _emailTextController.text,
+                          password: _passwordTextController.text)
+                      .then((value) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
                 }),
 
                 //Singup option
@@ -87,6 +103,21 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         )
       ],
+    );
+  }
+
+  Widget forgetPassword(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 35,
+      alignment: Alignment.bottomRight,
+      child: TextButton(
+        child: const Text("Forgot Password?",
+            style: TextStyle(color: Colors.white70),
+            textAlign: TextAlign.right),
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ResetPassword())),
+      ),
     );
   }
 }

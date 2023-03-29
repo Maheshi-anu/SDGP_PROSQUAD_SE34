@@ -1,3 +1,5 @@
+import 'package:beam_load_analyzer/screens/verify.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../reusable_widgets/reusable_widget.dart';
@@ -47,31 +49,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter UserName", Icons.person, false,
+                reusableTextField("Enter UserName", Icons.person_outline, false,
                     _userNameTextController),
 
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField(
-                    "Enter Email", Icons.email, false, _emailTextController),
+                reusableTextField("Enter Email", Icons.email_outlined, false,
+                    _emailTextController),
 
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Password", Icons.lock, true,
+                reusableTextField("Enter Password", Icons.lock_outline, true,
                     _passwordTextController),
 
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
 
-                signInSignUpButton(context, false, () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
-                })
+                firebaseButton(context, "Sign Up", () {
+                  FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: _emailTextController.text,
+                          password: _passwordTextController.text)
+                      .then((value) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const VerifyScreen()));
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
+                }),
               ],
             ),
           ))),

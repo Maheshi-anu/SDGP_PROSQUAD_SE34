@@ -1,6 +1,7 @@
 D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/data/icudtl.dat
 D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/flutter_windows.dll
 D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
+D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/data/flutter_assets/assets/images/logo.jpg
 D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
 D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
 D:/IIT/2nd yr/2nd sem/beam_load_analyzer/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin

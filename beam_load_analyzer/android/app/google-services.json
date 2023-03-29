@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "701973762016",
+    "project_id": "beam-load-analyzer-9c3f2",
+    "storage_bucket": "beam-load-analyzer-9c3f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701973762016:android:a20522e15ee6ad69b4a585",
+        "android_client_info": {
+          "package_name": "com.example.beam_load_analyzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701973762016-9t0420tl3g5i8vupabd0jkkqm50krmaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlnsEnot6ewcYQ567s0gT4vyzZTmube84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701973762016-9t0420tl3g5i8vupabd0jkkqm50krmaq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
