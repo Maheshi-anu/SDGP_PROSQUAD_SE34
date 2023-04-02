@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.indigo,
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.indigo,
+        // ),
         body: const MyStatefulWidget(),
         backgroundColor: Colors.white,
       ),
