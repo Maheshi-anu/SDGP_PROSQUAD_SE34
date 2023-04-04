@@ -14,6 +14,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       padding: const EdgeInsets.all(10),
       child: ListView(
         children: <Widget>[
+          SizedBox(
+            height: 50,
+          ),
           Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
@@ -23,26 +26,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ),
           Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: const Text(
-                'Beam Load Analyzer',
-                style: TextStyle(
-                    color: Colors.indigo,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 50),
-                textAlign: TextAlign.center,
-              )),
-          Container(
-            child: Image.asset('assets/images/trial1.jpg'),
-            height: 190,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: const Text(
+              'Beam Load Analyzer',
+              style: TextStyle(
+                  color: Colors.indigo,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 50),
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(
-            height: 20,
+            height: 30,
+          ),
+          Container(
+            child: Image.asset('assets/images/trial1.jpg'),
+            height: 300,
+          ),
+          SizedBox(
+            height: 50,
           ),
           Container(
             height: 40,
-            padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.indigo,
@@ -51,9 +58,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               onPressed: () {},
             ),
           ),
+          SizedBox(
+            height: 50,
+          ),
           Row(
             children: <Widget>[
-              const Text('Already have an account?'),
+              const Text(
+                'Already have an account?',
+                style: TextStyle(fontSize: 15),
+              ),
               TextButton(
                 child: const Text('Sign in',
                     style: TextStyle(color: Colors.indigo, fontSize: 15)),
