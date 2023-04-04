@@ -1,6 +1,8 @@
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(const MyApp());
@@ -31,8 +33,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   File? _image;
+  /** Values decoded from the image sent to the server */
+  List _decodedValues = [];
+
+  /**
+  check the type and set the decoded values returned from the server
+   */
+  void _setDecodedValues(response) {
+    if (response is List) {
+      _decodedValues = response;
+    }
+  }
 
   Future<void> _getImageFromCamera() async {
+    print("getting image from camera");
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
@@ -40,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _image = File(pickedFile.path);
       }
     });
+    print("before sending the request");
+    _setDecodedValues(await _sendImage(_image));
+    print("after sending the request");
   }
 
   Future<void> _getImageFromGallery() async {
@@ -50,13 +67,52 @@ class _MyHomePageState extends State<MyHomePage> {
         _image = File(pickedFile.path);
       }
     });
+    _setDecodedValues(await _sendImage(_image));
+  }
+
+  Future<List?> _sendImage(image) async {
+    var stream = await image.readAsBytes();
+    var length = await image.length();
+    print("fileSize : \n");
+    print(length / 1000);
+    try {
+      var headers = {'Content-Type': 'multipart/form-data'};
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://10.0.2.2:8000/api/main_image/'))
+        ..headers.addAll(headers)
+        ..files.add(http.MultipartFile.fromBytes('image', stream,
+            filename: 'image.jpg'));
+
+      // var url = Uri.http('127.0.0.1:8000', 'api/main_image/');
+      // var request = http.MultipartRequest('POST',url);
+      // request.files.add(new http.MultipartFile('file',stream, length, filename : "main_image.jpg"));
+      print("request.toString() \n");
+      print(request.toString());
+      var response = await request.send();
+      print(response.statusCode);
+      if (response.statusCode >= 400) {
+        //... 400, 401, 403, 500, 503
+        //... error
+      }
+      return json.decode(await response.stream.bytesToString());
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _navigateToNextScreen() {
+    //... check if server has sent a correct response
+    //... if not don't navigate to next screen
+    if (_decodedValues.length == 0) {
+      return;
+    }
+
+    print("navigating to 'NextScreen'");
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NextScreen(),
+        builder: (context) => NextScreen(decodedValues: _decodedValues),
       ),
     );
   }
@@ -75,10 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
             _image == null
                 ? const Text('No image selected.')
                 : Image.file(
-              _image!,
-              height: 400,
-              width: 400,
-            ),
+                    File(_image!.path),
+                    height: 400,
+                    width: 400,
+                  ),
           ],
         ),
       ),
@@ -98,7 +154,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Theme.of(context).primaryColor,
                 ),
               ),
-
               Expanded(
                 child: IconButton(
                   onPressed: _navigateToNextScreen,
@@ -122,30 +177,75 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class NextScreen extends StatefulWidget {
-  const NextScreen({super.key});
+  List decodedValues = [];
+  NextScreen({Key? key, required this.decodedValues}) : super(key: key);
 
-  @override
   _NextScreenState createState() => _NextScreenState();
 }
 
 class _NextScreenState extends State<NextScreen> {
+  var _textBoxesControllers = [];
+  var _textBoxWidgets = [];
   final _formKey = GlobalKey<FormState>();
-  final _textController1 = TextEditingController();
-  final _textController2 = TextEditingController();
-  final _textController3 = TextEditingController();
-  final _textController4 = TextEditingController();
+  var _imageResponse;
+
+/**
+prepare the text box value from the given  List
+ */
+  String _prepareTextValues(List values) {
+    var preparedValues = "";
+    values.forEach((value) => preparedValues += value);
+    return preparedValues;
+  }
+
+/**
+initialise the text box widgets and text box controllers
+ */
+  void initTextBoxControllersAndTextBoxes() {
+    for (var i = 1; i <= widget.decodedValues.length; i++) {
+      var txtController = TextEditingController(
+          text: _prepareTextValues(widget.decodedValues[i - 1]));
+      txtController.addListener(() {
+        widget.decodedValues[i - 1] = [txtController.text];
+      });
+      _textBoxesControllers.add(txtController);
+      _textBoxWidgets.add(TextFormField(
+          controller: txtController,
+          decoration: InputDecoration(
+            labelText: 'Field $i',
+          )));
+    }
+  }
 
   @override
   void dispose() {
-    _textController1.dispose();
-    _textController2.dispose();
-    _textController3.dispose();
-    _textController4.dispose();
+    //.. use a for loop to dispose all the text boxes
+    for (var i = 0; i <= _textBoxesControllers.length; i++) {
+      _textBoxesControllers[i].dispose();
+    }
     super.dispose();
+  }
+
+  Future<void> _getTheResponse() async {
+    print(jsonEncode(widget.decodedValues));
+
+    try {
+      var response = await http.post(
+          Uri.parse("http://10.0.2.2:8000/api/verified_data/"),
+          headers: {'Content-Type': "application/json"},
+          body: jsonEncode({'data' : widget.decodedValues}));
+
+      print(response.runtimeType);
+      _imageResponse = response.bodyBytes;
+    }
+    catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    initTextBoxControllersAndTextBoxes();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Details'),
@@ -157,50 +257,33 @@ class _NextScreenState extends State<NextScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                controller: _textController1,
-                decoration: const InputDecoration(
-                  labelText: 'Field 1',
-                ),
-              ),
-              TextFormField(
-                controller: _textController2,
-                decoration: const InputDecoration(
-                  labelText: 'Field 2',
-                ),
-              ),
-              TextFormField(
-                controller: _textController3,
-                decoration: const InputDecoration(
-                  labelText: 'Field 3',
-                ),
-
-              ),
-              TextFormField(
-                controller: _textController4,
-                decoration: const InputDecoration(
-                  labelText: 'Field 4',
-                ),
-              ),
+              ..._textBoxWidgets,
               const SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      _textController1.clear();
-                      _textController2.clear();
-                      _textController3.clear();
-                      _textController4.clear();
+                      _textBoxesControllers.forEach((textBoxController) {
+                        textBoxController.clear();
+                      });
                     },
                     child: const Text('Clear'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      //... call the api - api/verified_values
+                      await _getTheResponse();
+
+                      if (_imageResponse == null) {
+                        return;
+                      }
+                      //... navigate to the final screen
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ResultScreen(),
+                          builder: (context) =>
+                              ResultScreen(image: _imageResponse,), //... pass the image to the widget
                         ),
                       );
                     },
@@ -214,26 +297,26 @@ class _NextScreenState extends State<NextScreen> {
       ),
     );
   }
-
 }
 
 // Final Screen
-
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  final Uint8List image;
+  ResultScreen({Key? key, required this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Results'),
+        automaticallyImplyLeading : false
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset(
-            'assets/car.jpg',
+          Image.memory(
+            image,
             fit: BoxFit.cover,
             height: MediaQuery.of(context).size.height * 0.6,
           ),
