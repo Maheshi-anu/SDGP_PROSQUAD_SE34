@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'get_started.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,11 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My App',
+      title: 'Beam Load Analyzer',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'My App'),
+      debugShowCheckedModeBanner: false,
+      home: const MyStatefulWidget(),
     );
   }
 }
@@ -233,12 +240,11 @@ initialise the text box widgets and text box controllers
       var response = await http.post(
           Uri.parse("http://10.0.2.2:8000/api/verified_data/"),
           headers: {'Content-Type': "application/json"},
-          body: jsonEncode({'data' : widget.decodedValues}));
+          body: jsonEncode({'data': widget.decodedValues}));
 
       print(response.runtimeType);
       _imageResponse = response.bodyBytes;
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
     }
   }
@@ -282,8 +288,9 @@ initialise the text box widgets and text box controllers
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ResultScreen(image: _imageResponse,), //... pass the image to the widget
+                          builder: (context) => ResultScreen(
+                            image: _imageResponse,
+                          ), //... pass the image to the widget
                         ),
                       );
                     },
@@ -308,9 +315,7 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Results'),
-        automaticallyImplyLeading : false
-      ),
+          title: const Text('Results'), automaticallyImplyLeading: false),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
