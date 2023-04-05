@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:701973762016:android:565374ae850c916ab4a585",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701973762016-9t0420tl3g5i8vupabd0jkkqm50krmaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlnsEnot6ewcYQ567s0gT4vyzZTmube84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701973762016-9t0420tl3g5i8vupabd0jkkqm50krmaq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:701973762016:android:a20522e15ee6ad69b4a585",
         "android_client_info": {
           "package_name": "com.example.beam_load_analyzer"

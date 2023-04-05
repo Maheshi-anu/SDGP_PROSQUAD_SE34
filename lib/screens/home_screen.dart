@@ -1,7 +1,8 @@
-import 'package:beam_load_analyzer/screens/signin_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'signin_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

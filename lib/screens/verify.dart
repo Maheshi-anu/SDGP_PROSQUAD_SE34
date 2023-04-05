@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:beam_load_analyzer/screens/home_screen.dart';
-import 'package:beam_load_analyzer/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../utils/color_utils.dart';
 
 class VerifyScreen extends StatefulWidget {
@@ -86,7 +85,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
       timer.cancel();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(
+            builder: (context) =>
+                const MyHomePage(title: "Beam Load Analyzer")),
       );
     }
   }

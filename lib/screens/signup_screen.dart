@@ -1,10 +1,10 @@
-import 'package:beam_load_analyzer/screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
 import 'home_screen.dart';
+import 'verify.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

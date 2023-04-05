@@ -1,12 +1,12 @@
-import 'package:beam_load_analyzer/screens/home_screen.dart';
-import 'package:beam_load_analyzer/screens/reset_password.dart';
-import 'package:beam_load_analyzer/screens/signup_screen.dart';
-import 'package:beam_load_analyzer/utils/color_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../reusable_widgets/reusable_widget.dart';
+import '../utils/color_utils.dart';
+import 'reset_password.dart';
+import 'signup_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -70,7 +70,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                            builder: (context) =>
+                                const MyHomePage(title: "Beam Load Analyzer")));
                   }).onError((error, stackTrace) {
                     print("Error ${error.toString()}");
                   });

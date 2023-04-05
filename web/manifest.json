@@ -1,6 +1,6 @@
 {
-    "name": "beam_load_analyzer",
-    "short_name": "beam_load_analyzer",
+    "name": "app",
+    "short_name": "app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
