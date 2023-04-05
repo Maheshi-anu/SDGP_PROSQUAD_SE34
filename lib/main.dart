@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/screens/log_out_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'get_started.dart';
+import 'package:app/notification_center.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -129,7 +131,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () =>
+                //signup screen
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationView())),
+          ),
+          const LogOut(),
+        ],
       ),
       body: Center(
         child: Column(
@@ -255,6 +268,18 @@ initialise the text box widgets and text box controllers
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Details'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () =>
+                //signup screen
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationView())),
+          ),
+          const LogOut(),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -315,7 +340,21 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Results'), automaticallyImplyLeading: false),
+        title: const Text('Results'),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () =>
+                //signup screen
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationView())),
+          ),
+          const LogOut(),
+        ],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -323,25 +362,18 @@ class ResultScreen extends StatelessWidget {
           Image.memory(
             image,
             fit: BoxFit.cover,
-<<<<<<< HEAD
-            height: MediaQuery.of(context).size.height * 0.6,
-          ),
-          const SizedBox(height: 32.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-=======
             height: MediaQuery.of(context).size.height * 0.4,
           ),
           const SizedBox(height: 32.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 13.0),
->>>>>>> c219b97980a9389edd897be0685ccf1cf66230df
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MyApp(),
+                    builder: (context) =>
+                        const MyHomePage(title: "Beam Load Analyzer"),
                   ),
                 );
               },

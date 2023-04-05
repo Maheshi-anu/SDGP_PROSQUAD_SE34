@@ -116,7 +116,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.all(5),
                 child: const Text(
                   'Hi There, Welcome to',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               Container(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'main.dart';
+
 class HelpPage extends StatelessWidget {
   final List<String> instructions = const [
     "Capture the image clearly and in correct orientation.",
@@ -57,7 +59,8 @@ class HelpPage extends StatelessWidget {
               ),
             ),
             Image(
-              image: AssetImage("assets/customer_care.png"),
+              image: AssetImage("assets/images/customer_care.png"),
+              height: 150,
             ),
             SizedBox(height: 70),
             Text(
@@ -72,7 +75,7 @@ class HelpPage extends StatelessWidget {
               height: 10,
             ),
             Container(
-              height: 700, // fixed height for the listview
+              height: 340, // fixed height for the listview
               child: ListView.builder(
                 itemCount: instructions.length,
                 itemBuilder: (context, index) {
@@ -82,6 +85,17 @@ class HelpPage extends StatelessWidget {
                   );
                 },
               ),
+            ),
+
+            ElevatedButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const MyHomePage(title: "Beam Load Analyzer")));
+              },
             ),
           ],
         ),
