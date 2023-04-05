@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
+import '../help_page.dart';
 import '../main.dart';
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
@@ -67,13 +68,31 @@ class _SignInScreenState extends State<SignInScreen> {
                           email: _emailTextController.text,
                           password: _passwordTextController.text)
                       .then((value) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const MyHomePage(title: "Beam Load Analyzer")));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HelpPage()));
                   }).onError((error, stackTrace) {
-                    print("Error ${error.toString()}");
+                    String errorMessage = "";
+                    if (error is FirebaseAuthException) {
+                      switch (error.code) {
+                        case 'user-not-found':
+                          errorMessage = "User not found.";
+                          break;
+                        case 'wrong-password':
+                          errorMessage = "Invalid password.";
+                          break;
+                        default:
+                          errorMessage =
+                              "An error occurred while signing in. Please try again later.";
+                          break;
+                      }
+                    } else {
+                      errorMessage =
+                          "An error occurred while signing in. Please try again later.";
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(errorMessage),
+                      duration: Duration(seconds: 5),
+                    ));
                   });
                 }),
 

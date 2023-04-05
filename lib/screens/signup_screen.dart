@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
-import 'home_screen.dart';
+
 import 'verify.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -35,9 +35,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              hexStringToColor("00d4ff"),
-              hexStringToColor("090979"),
-              hexStringToColor("020024")
+              hexStringToColor("757BBE"),
+              hexStringToColor("7F4E7F"),
+              hexStringToColor("420420")
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           ),
           child: SingleChildScrollView(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../reusable_widgets/reusable_widget.dart';
 import '../utils/color_utils.dart';
-import 'home_screen.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
