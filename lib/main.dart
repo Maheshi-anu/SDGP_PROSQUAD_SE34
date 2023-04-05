@@ -323,11 +323,19 @@ class ResultScreen extends StatelessWidget {
           Image.memory(
             image,
             fit: BoxFit.cover,
+<<<<<<< HEAD
             height: MediaQuery.of(context).size.height * 0.6,
           ),
           const SizedBox(height: 32.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+=======
+            height: MediaQuery.of(context).size.height * 0.4,
+          ),
+          const SizedBox(height: 32.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 13.0),
+>>>>>>> c219b97980a9389edd897be0685ccf1cf66230df
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
